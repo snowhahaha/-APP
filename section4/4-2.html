@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>父子组件传值</title>
+		<script src="../vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<!-- 父组件使用属性向子组件传值 -->
+			<counter @change='handleChange' :count='0'></counter>
+			<counter @change='handleChange' :count='1'></counter>
+			<div>{{total}}</div>
+		</div>
+		<script>
+			var counter = {
+				props: ['count'],
+				data: function() {
+					return {
+						number: this.count
+					}
+				},
+				template: '<div @click="handleClick">{{number}}</div>',
+				methods: {
+					handleClick: function() {
+						// 子组件不能直接修改父组件传递的值,克隆后修改自己的值
+						this.number += 2;
+						// 子组件通过事件触发向父组件传值
+						this.$emit('change',2);
+					}
+				}
+			}
+			var vm = new Vue({
+				el: '#app',
+				components: {
+					counter: counter
+				},
+				data: {
+					total: 1
+				},
+				methods: {
+					handleChange: function(val) {
+						this.total += val
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
