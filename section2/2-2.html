@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>helloWorld</title>
+		<script src="../vue.js"></script>
+	</head>
+	<body>
+		<div id="app">{{message}}</div>
+		<!-- 不在实例接管范围内 -->
+		<div>{{message}}</div>
+		
+		<script>
+			//使用原生js
+			// var app = document.getElementById('app');
+			// app.innerHTML = 'Hello,world!';
+			// setTimeout(function(){
+			// 	app.innerHTML = 'bye!';
+			// },1000);
+			
+			//el限制实例接管的dom范围
+			//data定义数据
+			var app = new Vue({
+				el: '#app',
+				data: {
+					message: 'Hello,world!'
+				}
+			})
+			//$.data实例的数据对象
+			setTimeout(function(){
+				app.$data.message = 'bye!';
+			},1000)
+		</script>
+	</body>
+</html>

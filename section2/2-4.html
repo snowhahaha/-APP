@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>jquery按钮点击</title>
+		<script src="../jquery-1.9.1.js"></script>
+	</head>
+	<body>
+		<button id="btn">点击</button>
+		<script>
+			function Page(){};
+			//$.extend(target,obj1,obj2,...)将一个或多个对象内容合并到目标对象
+			//只有一个参数时目标对象是全局对象jQuery
+			$.extend(Page.prototype,{
+				init: function(){
+					this.bindEvents();
+				},
+				bindEvents: function(){
+					var btn = $("#btn");
+					//$.proxy(func,context)接受一个已有函数,并返回带指定上下文的新函数
+					btn.on('click',$.proxy(this.handleBtnClick,this))
+				},
+				handleBtnClick: function(){
+					alert("123");
+				}
+			});
+			var page = new Page();
+			page.init();
+		</script>
+	</body>
+</html>
