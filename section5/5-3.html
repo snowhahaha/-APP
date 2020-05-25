@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Vue中同时使用过渡和动画</title>
+		<link rel="stylesheet" href="../animate.min.css"/>
+		<script src="../vue.js"></script>
+		</head>
+		<body>
+			<div id="app">
+				<!-- 第一次显示使用appear-active-class 并加上appear才生效 -->
+				<transition 
+					name="fade"
+					appear
+					enter-active-class="animate__animated animate__bounce"
+					leave-active-class="animate__animated animate__flash"
+					appear-active-class="animate__animated animate__flash"
+				 >
+					<div v-if="show">hello</div>
+				</transition>
+				<button @click="handleBtnClick">切换</button>
+			</div>
+			<script>
+				var vm = new Vue({
+					el:"#app",
+					data: {
+						show: true
+					},
+					methods: {
+						handleBtnClick: function() {
+							this.show = this.show === true ? false : true
+						}
+					}
+				})
+			</script>
+	</body>
+</html>

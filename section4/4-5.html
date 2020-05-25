@@ -6,13 +6,36 @@
 		<script src="../vue.js"></script>
 	</head>
 	<body>
-		<div id="app"></div>
+		<div id="app">
+			<child content='hello'></child>
+			<child content='world'></child>
+		</div>
 		<script>
-			var vm = new Vue({
-				el: '#app',
+			Vue.prototype.bus = new Vue();
+			Vue.component('child', {
+				props: {
+					content: String
+				},
+				data: function(){
+					return {
+						selfContent: this.content
+					}
+				},
+				template: '<div @click="handleClick">{{selfContent}}</div>',
 				methods: {
-					
+					handleClick: function(){
+						this.bus.$emit('change',this.selfContent);
+					}
+				},
+				mounted: function(){
+					var _this = this;
+					this.bus.$on('change',function(msg){
+						_this.selfContent = msg
+					})
 				}
+			})
+			var vm = new Vue({
+				el: '#app'
 			})
 		</script>
 	</body>

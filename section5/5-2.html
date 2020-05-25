@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Vue中使用animate.css</title>
+		<link rel="stylesheet" href="../animate.min.css"/>
+		<script src="../vue.js"></script>
+		<style>
+				/* @keyframes定义动画，使用animate: 动画名 时间 */
+				@keyframes bounce-in {
+					0% {transform: scale(0)}
+					50% {transform: scale(1.5)}
+					100% {transform: scale(1)}
+				}
+				.active {
+					transform-origin: left center;
+					animation: bounce-in 1s;
+				}
+				.leave {
+					transform-origin: left center;
+					animation: bounce-in 1s reverse;
+				}
+		</style>
+		</head>
+		<body>
+			<div id="app">
+				<!-- enter-active-class定义进入样式 leave-active-class离开样式 -->
+				<transition 
+					name="fade"
+					enter-active-class="animate__animated animate__bounce"
+					leave-active-class="animate__animated animate__flash"
+				 >
+					<div v-if="show">hello</div>
+				</transition>
+				<button @click="handleBtnClick">切换</button>
+			</div>
+			<script>
+				var vm = new Vue({
+					el:"#app",
+					data: {
+						show: true
+					},
+					methods: {
+						handleBtnClick: function() {
+							this.show = this.show === true ? false : true
+						}
+					}
+				})
+			</script>
+	</body>
+</html>
