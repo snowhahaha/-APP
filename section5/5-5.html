@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue多个元素或组件的过渡</title>
+		<script src="../vue.js"></script>
+		<style>
+			.v-enter,.v-leave-to {opacity: 0}
+			.v-enter-active,.v-leave-active {
+				transition: opacity 1s
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<transition mode="out-in">
+				<!-- <div v-if="isShow" key="hello">hello</div>
+				<div v-else key="world">world</div> -->
+				<component :is="type"></component>
+			</transition>
+			<button @click="handleBtnClick">点击</button>
+		</div>
+		<script>
+			Vue.component('child',{
+				template: '<div>child</div>'
+			})
+			Vue.component('child-one',{
+				template: '<div>child-one</div>'
+			})
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					isShow: true,
+					type: 'child'
+				},
+				methods: {
+					handleBtnClick: function() {
+						this.isShow = !this.isShow
+						this.type = this.type === 'child' ? 'child-one' : 'child' 
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
